@@ -1,21 +1,26 @@
-# Objects
-function addTwoToEveryNumberInTheList (list) {
+// # Objects
+function addTwoToEveryNumberInTheList(list) {
   // an example for you to see how the tests work
-  
+
   const newList = [];
 
   for (let i = 0; i < list.length; i++) {
     newList.push(list[i] + 2);
   }
-  
+
   return newList;
-} 
+}
+
 
 function findLargestNumber(list) {
   // return the largest number in array
+  return Math.max.apply(null, list);
 
-  return 0;
 }
+
+
+
+
 
 function makeDogObject() {
   // return a dog object that
@@ -23,56 +28,89 @@ function makeDogObject() {
   //   has a name property of "Fido"
   //   has a color property of "white"
   //   has an age property of 6
-
-  return {};
+  const dog = {
+    speak() {
+      return "woof";
+    },
+    name: "Fido",
+    color: "white",
+    age: 6,
+  }
+  console.log(dog.age);
+  return dog;
 }
+
 
 function getListOfNames(list) {
   // list is an array of objects that looks like this
   // { name: "Some Person", jobTitle: "Boss Person", age: 30 }
   // return a list of all the workers' names
+  const names = [];
+  for (let i = 0; i < list.length; i++) {
+    names.push(list[i].name);
 
-  return ["Bobby Baratheon", "Jonny Snow", "Dani Targaryen"];
+  return names;
+}
 }
 
 function getAverageAge(list) {
   // using the same list as above, get the average age of all the workers'
+  let average = 0;
+  for (let i  in list) {
+    average += list[i].age;
 
-  return 15;
+  
 }
+return Math.floor(average / list.length);
+}
+
 
 function getAllEngineers(list) {
+  let engineers = [];
   // using the same list as above, return a list of all people who have the word "Engineer" in their jobTitle
-
-  return ["Altaïr", "Ezio", "Connor", "Bayek", "Alexios"];
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].jobTitle.includes("Engineer")) {
+      engineers.push(list[i].name);
+    }
 }
+return engineers;
+
+}
+
 
 function sort(list) {
   // sort a list of numbers into ascending order
   // if you need more help, Google how to do bubble sort
   // you can sort, if you want to write it by hand, use bubble sort or insertion sort
+  list.sort(function(a, b) {
+    return a - b;
+  });
 
-  return [1, 2, 3, 4];
+  return list;
 }
+
+console.log(sort([12,11,3,2,6,5,4,1]));
+
+
 
 // unit tests
 // do not modify the below code
 
-describe("addTwoToEveryNumberInTheList", function() {
-  it("should add two to every number in a list - test case", function() {
+describe("addTwoToEveryNumberInTheList", function () {
+  it("should add two to every number in a list - test case", function () {
     expect(addTwoToEveryNumberInTheList([2, 3, 4, 6, 9, 1])).toEqual([4, 5, 6, 8, 11, 3]);
   });
-  
-  it("should add two to every number in a list - list of one", function() {
+
+  it("should add two to every number in a list - list of one", function () {
     expect(addTwoToEveryNumberInTheList([1])).toEqual([3]);
   });
-  
-  it("should add two to every number in a list - empty list", function() {
+
+  it("should add two to every number in a list - empty list", function () {
     expect(addTwoToEveryNumberInTheList([])).toEqual([]);
   });
 });
 
-describe("findLargestNumber", function() {
+describe("findLargestNumber", function () {
   it("test case 1", () => {
     const numbers = [5, 2, 9, 30, 12, 1, 0, 13];
 
@@ -95,26 +133,26 @@ describe("findLargestNumber", function() {
   });
 });
 
-describe("makeDogObject", function() {
+describe("makeDogObject", function () {
   let dog;
-  beforeEach(function() {
+  beforeEach(function () {
     dog = makeDogObject();
   });
-  it("should should have a name", function() {
+  it("should should have a name", function () {
     expect(dog.name).toBe("Fido");
   });
-  it("should should have an age", function() {
+  it("should should have an age", function () {
     expect(dog.age).toBe(6);
   });
-  it("should should have a color", function() {
+  it("should should have a color", function () {
     expect(dog.color).toBe("white");
   });
-  it("should speak", function() {
+  it("should speak", function () {
     expect(dog.speak()).toBe("woof");
   });
 });
 
-describe("tests with jobs", function() {
+describe("tests with jobs", function () {
   const people = [
     {
       name: "Rafi Backe",
@@ -618,8 +656,8 @@ describe("tests with jobs", function() {
     }
   ];
 
-  describe("getListOfNames", function() {
-    it("should return a list of names", function() {
+  describe("getListOfNames", function () {
+    it("should return a list of names", function () {
       const names = getListOfNames(people);
 
       expect(names).toEqual([
@@ -727,16 +765,16 @@ describe("tests with jobs", function() {
     });
   });
 
-  describe("getAverageAge", function() {
-    it("should find the average age", function() {
+  describe("getAverageAge", function () {
+    it("should find the average age", function () {
       const age = getAverageAge(people);
 
       expect(age).toBeCloseTo(42.91, 1);
     });
   });
 
-  describe("getAllEngineers", function() {
-    it("should find the most common job", function() {
+  describe("getAllEngineers", function () {
+    it("should find the most common job", function () {
       const names = getAllEngineers(people);
 
       expect(names).toEqual([
@@ -759,28 +797,28 @@ describe("tests with jobs", function() {
   });
 });
 
-describe("sort", function() {
-  it("should sort a list of numbers, test case 1", function() {
+describe("sort", function () {
+  it("should sort a list of numbers, test case 1", function () {
     const numbers = [5, 9, 1, 3, 2, 11, 7];
 
     expect(sort(numbers)).toEqual([1, 2, 3, 5, 7, 9, 11]);
   });
-  it("should sort a list of numbers, already sorted", function() {
+  it("should sort a list of numbers, already sorted", function () {
     const numbers = [1, 2, 3, 4, 5, 6];
 
     expect(sort(numbers)).toEqual([1, 2, 3, 4, 5, 6]);
   });
-  it("should sort a list of numbers, reverse sorted", function() {
+  it("should sort a list of numbers, reverse sorted", function () {
     const numbers = [10, 9, 8, 7, 6, 5];
 
     expect(sort(numbers)).toEqual([5, 6, 7, 8, 9, 10]);
   });
-  it("should sort a list of numbers, list of one", function() {
+  it("should sort a list of numbers, list of one", function () {
     const numbers = [1337];
 
     expect(sort(numbers)).toEqual([1337]);
   });
-  it("should sort a list of numbers, empty list", function() {
+  it("should sort a list of numbers, empty list", function () {
     const numbers = [];
 
     expect(sort(numbers)).toEqual([]);
